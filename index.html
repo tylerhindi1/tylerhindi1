@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read Local Storage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        .token-display {
+            font-size: 1.2rem;
+            color: #333;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            width: fit-content;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Local Storage Token Display</h1>
+    <div id="tokenContainer" class="token-display">Token will appear here...</div>
+
+    <script>
+        // Function to get the aeonxPortalToken from local storage and display it
+        function displayToken() {
+            // Retrieve the token value from local storage
+            const token = localStorage.getItem('aeonxPortalToken');
+            
+            // Get the token container element
+            const tokenContainer = document.getElementById('tokenContainer');
+
+            // Display the token or a message if it's not found
+            if (token) {
+                tokenContainer.textContent = `Token: ${token}`;
+            } else {
+                tokenContainer.textContent = 'Token not found in local storage.';
+            }
+        }
+
+        // Call the function on page load
+        window.onload = displayToken;
+    </script>
+
+</body>
+</html>
