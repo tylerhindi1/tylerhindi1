@@ -3,47 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Read Local Storage</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-        }
-        .token-display {
-            font-size: 1.2rem;
-            color: #333;
-            padding: 10px;
-            background-color: #f0f0f0;
-            border: 1px solid #ccc;
-            width: fit-content;
-        }
-    </style>
+    <title>Token Receiver</title>
 </head>
 <body>
-
-    <h1>Local Storage Token Display</h1>
-    <div id="tokenContainer" class="token-display">Token will appear here...</div>
+    <h1>Token from Parent Page</h1>
+    <div id="tokenDisplay">Waiting for token...</div>
 
     <script>
-        // Function to get the aeonxPortalToken from local storage and display it
-        function displayToken() {
-            // Retrieve the token value from local storage
-            const token = localStorage.getItem('aeonxPortalToken');
-            
-            // Get the token container element
-            const tokenContainer = document.getElementById('tokenContainer');
+        // Listen for messages from the parent page
+        window.addEventListener('message', function(event) {
+            // Ensure the message is from the correct origin
+            if (event.origin === 'https://aeonxus.digital') {
+                // Get the token data from the message
+                const token = event.data.token;
 
-            // Display the token or a message if it's not found
-            if (token) {
-                tokenContainer.textContent = `Token: ${token}`;
+                // Display the token
+                document.getElementById('tokenDisplay').textContent = 'Token: ' + token;
             } else {
-                tokenContainer.textContent = 'Token not found in local storage.';
+                console.warn('Message from unauthorized origin:', event.origin);
             }
-        }
-
-        // Call the function on page load
-        window.onload = displayToken;
+        });
     </script>
-
 </body>
 </html>
